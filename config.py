@@ -19,7 +19,7 @@ DURATION_LIMIT = int(getenv("DURATION_LIMIT", "7"))
 
 CHANNEL_USERNAME = getenv("CHANNEL_USERNAME", "SL_bot_zone")
 
-CHANNEL_ID = int(getenv("CHANNEL_ID", "-1001234567"))
+CHANNEL_ID = int(getenv("CHANNEL_ID", "-1001325914694"))
 
 COMMAND_PREFIXES = list(getenv("COMMAND_PREFIXES", "/ !").split())
 
