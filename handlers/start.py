@@ -26,15 +26,15 @@ async def start(_, message: Message):
         text=f"**📢 News ** \n#New_Music_Lover **Started To Using Me!** \n\nFirst Name: `{message.from_user.first_name}` \nUser ID: `{message.from_user.id}` \nProfile Link: [{message.from_user.first_name}](tg://user?id={message.from_user.id})",
         parse_mode="markdown"
     )
-    await message.reply_sticker("CAACAgIAAxkBAAJ4CWD-QDLtbiLOh4CirYmWhioJ8KWJAAI2BwACRvusBAqX86rdUV82IAQ")        
+    await message.reply_sticker("CAACAgIAAxkBAAKkRGEKXUw3_fX8ZI0-L2_Tt5AaMj_GAAJjAgACusCVBWeMFzsKh0zqIAQ")        
     await message.reply_text(
         f"""<b>Hi {message.from_user.mention} 🤖 !</b>
         
 I'm  Yakari 2.O version  Music Bot! A Powerful Bot to Play Music in Your Group Voice Chat 😇!
 
 Also I have more features! Please hit on **/help** to see them 👨‍💻 !
-Are you my Owner Please hit on **/modhelp**(Owner/sudo users only) to see some features!
-Made by /credits  ❤️ **@{UPDATES_CHANNEL}**""",
+
+Made by❤️ **@{UPDATES_CHANNEL}**""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
