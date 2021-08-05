@@ -49,11 +49,11 @@ PLAYMSG_BUTTONS = InlineKeyboardMarkup(
 )
 
 
-JOIN_ASAP = "<b>You Need To Join My updates channel  For Executing This Command...</b>"
+JOIN_ASAP = "<b>You Need To Join My updates channel  For Executing This Command 👮‍♀️...</b>"
 
 FSUBB = InlineKeyboardMarkup(
         [[
-        InlineKeyboardButton(text="Join My Channel", url=f"https://t.me/sl_bot_zone")
+        InlineKeyboardButton(text="🔔 Join My Channel", url=f"https://t.me/sl_bot_zone")
         ]]
     )
 
