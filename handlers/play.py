@@ -58,9 +58,9 @@ FSUBB = InlineKeyboardMarkup(
     )
 
 
-@Client.on_message(command(["play", f"play@{BOT_USERNAME}"]) & other_filters)
+@Client.on_message(command(["nplay", f"nplay@{BOT_USERNAME}"]) & other_filters)
 @errors
-async def play(_, message: Message):
+async def nplay(_, message: Message):
     try:
         await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
     except UserNotParticipant:
@@ -115,7 +115,7 @@ async def play(_, message: Message):
                         break
 
         if offset in (None,):
-            await response.edit_text(f"` You did not give me anything to play!`")
+            await response.edit_text(f" You did not give me anything to play!")
             return
 
         url = text[offset:offset + length]
@@ -136,8 +136,15 @@ async def play(_, message: Message):
 
 # Pros reading this code be like: Wait wut? wtf? dumb? Me gonna die, lol etc.
 
-@Client.on_message(command("nplay") & other_filters)
-async def nplay(_, message: Message):
+@Client.on_message(command("play") & other_filters)
+async def play(_, message: Message): 
+    try:
+        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
+    except UserNotParticipant:
+        await message.reply_text(
+        text=JOIN_ASAP, disable_web_page_preview=True, reply_markup=FSUBB
+    )
+        return
     global que
     
     lel = await message.reply_text("**🔄Processing Your Song ...**")
