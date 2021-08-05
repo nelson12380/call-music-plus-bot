@@ -54,13 +54,14 @@ async def start(_, message: Message):
                         "🔔  My Update Channel", url=f"https://t.me/{UPDATES_CHANNEL}"
                     ),
                     InlineKeyboardButton(
-                        "💬 Support Group ", url="https://t.me/slbotzone" 
-                ],
+                        "💬 Support Group ", url="https://t.me/slbotzone"
+                    )
+                ]
             ]
         )
     )
 
-
+    
 # Help Menu
 
 @Client.on_message(command(["help", f"help@{BOT_USERNAME}"]))
