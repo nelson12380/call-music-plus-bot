@@ -25,16 +25,15 @@ async def start(_, message: Message):
         chat_id=LOG_CHANNEL,
         text=f"**📢 News ** \n#New_Music_Lover **Started To Using Me!** \n\nFirst Name: `{message.from_user.first_name}` \nUser ID: `{message.from_user.id}` \nProfile Link: [{message.from_user.first_name}](tg://user?id={message.from_user.id})",
         parse_mode="markdown"
-    )
-    await message.reply_sticker("CAACAgIAAxkBAAKkRGEKXUw3_fX8ZI0-L2_Tt5AaMj_GAAJjAgACusCVBWeMFzsKh0zqIAQ")        
+    )      
     await message.reply_text(
-        f"""<b>Hi {message.from_user.mention} 🤖 !</b>
+        f"""<b>Hello {message.from_user.mention} 🤖 !</b>
         
-I'm  Yakari 2.O version  Music Bot! A Powerful Bot to Play Music in Your Group Voice Chat 😇!
+<b>I'm  Yakari 2.O version  Music Bot! A Powerful Bot to Play Music in Your Group Voice Chat 😇! </b>
 
-Also I have more features! Please hit on **/help** to see them 👨‍💻 !
+<b>Also I have more features! Please hit on **/help** to see them 👨‍💻 !</b>
 
-Made by❤️ **@{UPDATES_CHANNEL}**""",
+<b>Made by❤️</b> **@{UPDATES_CHANNEL}**""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -49,7 +48,7 @@ Made by❤️ **@{UPDATES_CHANNEL}**""",
                 ],
                 [
                     InlineKeyboardButton(
-                        "⚒ Create your one 📦", url="https://www.youtube.com/channel/UCvYfJcTr8RY72dIapzMqFQA"
+                        "⚒ Create your one 📦", url="https://www.youtube.com/watch?v=G58pr-Ro5aY&t=37s&pp=sAQA"
                     )
                 ],
                 [
@@ -82,7 +81,7 @@ async def help(_, message: Message):
     await message.reply_text(
         f"""<b>Hi {message.from_user.mention} 😉️!</b>
 
-**Here is the Help Menu For This Bot 😊!**""",
+**<b>Here is the Help Menu For This Bot 😊! </b>**""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -139,7 +138,7 @@ Special Thanks 💝 For all of first code owners 😍</b> !
 
 ✅ Credits To,
 
-<b>1️⃣  <a href="https://www.youtube.com/channel/UCvYfJcTr8RY72dIapzMqFQA">sl geek show youtube </a></b> -  (❤️) !
+<b>1️⃣ <a href="https://www.youtube.com/channel/UCvYfJcTr8RY72dIapzMqFQA">sl geek show youtube </a></b> -  (❤️) !
 <b>2️⃣ Left-TG |『 刀乇ﾒﾑ 乃のｲ丂 』</b> - (First code owner ❤️)
 <b>3️⃣ N.M.Dinura Uthsara Nikalansuriya</b> - ( Heroku supporter👨‍💻)
 <b>4️⃣ AbirHasan2005</b>
