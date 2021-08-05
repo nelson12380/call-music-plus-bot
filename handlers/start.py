@@ -48,7 +48,7 @@ async def start(_, message: Message):
                     InlineKeyboardButton(
                         "⚒ Create your one 📦", url="https://www.youtube.com/watch?v=G58pr-Ro5aY&t=37s&pp=sAQA"
                     )
-                ]
+                ],
                 [
                     InlineKeyboardButton(
                         "🔔  My Update Channel", url=f"https://t.me/{UPDATES_CHANNEL}"
