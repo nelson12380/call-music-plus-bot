@@ -135,14 +135,8 @@ async def play(_, message: Message):
 
 # Pros reading this code be like: Wait wut? wtf? dumb? Me gonna die, lol etc.
 
-@Client.on_message(command(["play", f"play@{BOT_USERNAME}"]) & other_filters)
+@Client.on_message(command(["nplay", f"nplay@{BOT_USERNAME}"]) & other_filters)
 @errors  
-      try:
-        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
-    except UserNotParticipant:
-        await message.reply_text(
-        text=JOIN_ASAP, disable_web_page_preview=True, reply_markup=FSUBB
-    )
         return
 async def nplay(_, message: Message):
     global que
