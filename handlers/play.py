@@ -69,7 +69,7 @@ async def play(_, message: Message):
         return
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
 
-    response = await message.reply_text("**🧭 Processing Your Song ...**")
+    response = await message.reply_text("**🔄 Processing Your Song ...**")
 
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
@@ -136,11 +136,18 @@ async def play(_, message: Message):
 # Pros reading this code be like: Wait wut? wtf? dumb? Me gonna die, lol etc.
 
 @Client.on_message(command(["play", f"play@{BOT_USERNAME}"]) & other_filters)
-@errors
+@errors  
+      try:
+        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
+    except UserNotParticipant:
+        await message.reply_text(
+        text=JOIN_ASAP, disable_web_page_preview=True, reply_markup=FSUBB
+    )
+        return
 async def nplay(_, message: Message):
     global que
     
-    lel = await message.reply_text("**🧭Processing Your Song ...**")
+    lel = await message.reply_text("**🔄Processing Your Song ...**")
     user_id = message.from_user.id
     user_name = message.from_user.first_name
 
