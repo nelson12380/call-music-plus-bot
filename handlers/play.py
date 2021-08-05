@@ -5,7 +5,7 @@ from os import path
 from pyrogram import Client, filters # Ik this is weird as this shit is already imported in line 16! anyway ... 
 from pyrogram.types import Message, Voice, InlineKeyboardMarkup, InlineKeyboardButton, Chat, CallbackQuery
 from youtube_search import YoutubeSearch
-
+from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
 from callsmusic import callsmusic, queues
 
 import converter
@@ -16,7 +16,7 @@ import wget
 
 from helpers.database import db, Database
 from helpers.dbthings import handle_user_status
-from config import DURATION_LIMIT, LOG_CHANNEL, BOT_USERNAME, THUMB_URL, CHANNEL_USERNAME, CHANNEL_ID
+from config import DURATION_LIMIT, LOG_CHANNEL, BOT_USERNAME, THUMB_URL
 from helpers.errors import DurationLimitError
 from helpers.filters import command, other_filters
 from helpers.decorators import errors
@@ -49,19 +49,19 @@ PLAYMSG_BUTTONS = InlineKeyboardMarkup(
 )
 
 
-JOIN_ASAP = "<b>You Need To Join My For Executing This Command ⛔️...</b>"
+JOIN_ASAP = "<b>You Need To Join My For Executing This Command...</b>"
 
 FSUBB = InlineKeyboardMarkup(
         [[
-        InlineKeyboardButton(text="Join My Channel ✅", url=f"https://t.me/{CHANNEL_USERNAME}")
+        InlineKeyboardButton(text="Join My Channel", url=f"https://t.me/sl_bot_zone")
         ]]
     )
 
-@Client.on_message(command(["play", f"play@{BOT_USERNAME}"]) & other_filters)
-@errors
-async def nplay(_, message: Message):
+
+@Client.on_message(command("play") & other_filters)
+async def play(_, message: Message):
     try:
-        await message._client.get_chat_member(int("{CHANNEL_ID}"), message.from_user.id)
+        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
     except UserNotParticipant:
         await message.reply_text(
         text=JOIN_ASAP, disable_web_page_preview=True, reply_markup=FSUBB
