@@ -2,11 +2,20 @@ import os
 
 from pyrogram import Client, filters # Ik this is weird as this shit is already imported in line 6! anyway ... Fuck Off!
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, Chat
+from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
 
 from helpers.filters import command, other_filters, other_filters2
 from helpers.database import db, Database
 from helpers.dbthings import handle_user_status
 from config import LOG_CHANNEL, BOT_USERNAME, UPDATES_CHANNEL
+
+JOIN_ASAP = "<b>You Need To Join My updates channel  For Executing This Command...</b>"
+
+FSUBB = InlineKeyboardMarkup(
+        [[
+        InlineKeyboardButton(text="Join My Channel", url=f"https://t.me/sl_bot_zone")
+        ]]
+    )
 
 
 @Client.on_message(filters.private)
@@ -16,6 +25,13 @@ async def _(bot: Client, cmd: Message):
 
 @Client.on_message(command(["start", f"start@{BOT_USERNAME}"]))
 async def start(_, message: Message):
+        try:
+        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
+    except UserNotParticipant:
+        await message.reply_text(
+        text=JOIN_ASAP, disable_web_page_preview=True, reply_markup=FSUBB
+    )
+        return
     usr_cmd = message.text.split("_")[-1]
     if usr_cmd == "/start":
         chat_id = message.chat.id
