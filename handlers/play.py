@@ -31,25 +31,19 @@ async def _(bot: Client, cmd: command):
 
 
 PLAYMSG_BUTTONS = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton(
-                "⏸ Pause ⏸", callback_data="cbpause"
-            ),
-            InlineKeyboardButton(
-                "⏩ Next song⏩", callback_data="cbskip"
-            ),
-        ],
-        [
-            InlineKeyboardButton(
-                "Watch On YouTube 🎬",url="https://www.youtube.com/watch?v=G58pr-Ro5aY&t=22s"
-            ),
-            InlineKeyboardButton(
-               "🛑 Close 🛑", callback_data="close"
-            ),
-        ],
-    ]
-)
+            [
+                [
+                    InlineKeyboardButton("⏸ Pause ⏸",callback_data="cbpause"),
+                    InlineKeyboardButton("⏩ Next song⏩", callback_data="cbskip"),
+                ],
+                [
+                    InlineKeyboardButton(text="Watch On YouTube 🎬",url="https://www.youtube.com/watch?v=G58pr-Ro5aY&t=22s"),
+                    InlineKeyboardButton(text="🔔Bot Updates", url="https://t.me/SL_bot_zone"),
+                ],
+                [
+                    InlineKeyboardButton(text="❌ Close",callback_data="close")],
+            ]
+        )
 
 
 JOIN_ASAP = "<b>You Need To Join My updates channel  For Executing This Command 👮‍♀️...</b>"
