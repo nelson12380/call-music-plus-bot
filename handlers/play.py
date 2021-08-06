@@ -1,8 +1,8 @@
-# Copyright (c) 2021 Itz-fork <https://github.com/Itz-fork> and Callsmusic
+
 
 from os import path
 
-from pyrogram import Client, filters # Ik this is weird as this shit is already imported in line 16! anyway ... 
+from pyrogram import Client, filters 
 from pyrogram.types import Message, Voice, InlineKeyboardMarkup, InlineKeyboardButton, Chat, CallbackQuery
 from youtube_search import YoutubeSearch
 from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
@@ -29,7 +29,7 @@ async def _(bot: Client, cmd: command):
     await handle_user_status(bot, cmd)
 
 
-# Some Secret Buttons
+
 PLAYMSG_BUTTONS = InlineKeyboardMarkup(
     [
         [
@@ -37,14 +37,17 @@ PLAYMSG_BUTTONS = InlineKeyboardMarkup(
                 "⏸ Pause ⏸", callback_data="cbpause"
             ),
             InlineKeyboardButton(
-                "⏩ Skip ⏩", callback_data="cbskip"
+                "⏩ Next song⏩", callback_data="cbskip"
             ),
         ],
         [
             InlineKeyboardButton(
-                "❌ Close ❌", callback_data="close"
-            )
-        ]
+                "Watch On YouTube 🎬",url="https://www.youtube.com/watch?v=G58pr-Ro5aY&t=22s"
+            ),
+            InlineKeyboardButton(
+               "🛑 Close 🛑", callback_data="close"
+            ),
+        ],
     ]
 )
 
@@ -70,7 +73,7 @@ async def nplay(_, message: Message):
         return
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
 
-    response = await message.reply_text("**🔄 Processing Your Song ...**")
+    response = await message.reply_text("<b> Please Wait ⏳ ...🎵 Processing Your Song ... </b>")
 
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
@@ -126,12 +129,12 @@ async def nplay(_, message: Message):
         position = await queues.put(message.chat.id, file=file)
         MENTMEH = message.from_user.mention()
         await response.delete()
-        await message.reply_photo(thumb, caption=f"**Your Song Queued at position💡** `{position}`! \n**Requested by: {MENTMEH}**", reply_markup=PLAYMSG_BUTTONS)
+        await message.reply_photo(thumb, caption=f"Your Song Queued at position💡** `{position}`! \n**Requested by: {MENTMEH}**", reply_markup=PLAYMSG_BUTTONS)
     else:
         thumb = THUMB_URL
         await callsmusic.set_stream(message.chat.id, file)
         await response.delete()
-        await message.reply_photo(thumb, caption="**Playing Your Song 🎸...** \n**Requested by: {}**".format(message.from_user.mention()), reply_markup=PLAYMSG_BUTTONS)
+        await message.reply_photo(thumb, caption="<b>Playing Your Song 🎸... </b>\n**Requested by: {}**\nvia @sl_bot_zone 🎙".format(message.from_user.mention()), reply_markup=PLAYMSG_BUTTONS)
 
 
 # Pros reading this code be like: Wait wut? wtf? dumb? Me gonna die, lol etc.
@@ -147,7 +150,7 @@ async def play(_, message: Message):
         return
     global que
     
-    lel = await message.reply_text("**🔄Processing Your Song ...**")
+    lel = await message.reply_text("<b> Please Wait ⏳ ...🎵 Processing Your Song ... </b>")
     user_id = message.from_user.id
     user_name = message.from_user.first_name
 
@@ -171,7 +174,7 @@ async def play(_, message: Message):
 
     except Exception as e:
         await lel.edit(
-            f"**Error:** {e}"
+            f"<b>Some Error Found Please Wait Or Try Again ...</b> {e}"
         )
         print(str(e))
         return
@@ -181,7 +184,7 @@ async def play(_, message: Message):
             dur += (int(dur_arr[i]) * secmul)
             secmul *= 60
         if (dur / 60) > DURATION_LIMIT:
-             await lel.edit(f"Bruh! Videos longer than `{DURATION_LIMIT}` minute(s) aren’t allowed, the provided audio is {round(audio.duration / 60)} minute(s) 😒")
+             await lel.edit(f"No! Videos longer than `{DURATION_LIMIT}` minute(s) aren’t allowed, the provided audio is {round(audio.duration / 60)} minute(s) 😒")
              return
     except:
         pass    
@@ -197,4 +200,4 @@ async def play(_, message: Message):
         thumb = THUMB_URL
         await callsmusic.set_stream(message.chat.id, file)
         await lel.delete()
-        await message.reply_photo(thumb, caption="**Playing Your Song 🎸...** \n**Requested by: {}**".format(message.from_user.mention()), reply_markup=PLAYMSG_BUTTONS)
+        await message.reply_photo(thumb, caption="<b>Playing Your Song 🎸... </b>\n**Requested by: {}**\nvia @sl_bot_zone 🎙".format(message.from_user.mention()), reply_markup=PLAYMSG_BUTTONS)
