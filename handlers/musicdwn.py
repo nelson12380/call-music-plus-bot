@@ -1,5 +1,5 @@
 # (c) @TheHamkerCat , @MrDarkPrince, @TeamOfDaisyX
-
+# thank you First Coad Owner .. @supunma  I add fsub 
 
 from __future__ import unicode_literals
 
@@ -26,7 +26,7 @@ from pyrogram.types import Message,InlineKeyboardMarkup, InlineKeyboardButton
 from youtubesearchpython import SearchVideos
 from youtube_search import YoutubeSearch
 from Python_ARQ import ARQ
-
+from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
 from config import ARQ_API_URL, ARQ_API_KEY, BOT_USERNAME, UPDATES_CHANNEL
 from helpers.merrors import capture_err
 from helpers.modhelps import paste
@@ -117,11 +117,24 @@ async def progress(current, total, message, start, type_of_ps, file_name=None):
                 await asyncio.sleep(e.x)
             except MessageNotModified:
                 pass
+            
+JOIN_ASAP = "<b>You Need To Join My updates channel  For Executing This Command 👮‍♀️...</b>"
 
+FSUBB = InlineKeyboardMarkup(
+        [[
+        InlineKeyboardButton(text="🔔 Join My Channel", url=f"https://t.me/sl_bot_zone")
+        ]]
+    )
 
-@Client.on_message(filters.command(['yts', f'yts@{BOT_USERNAME}']))
-def song(client, message):
-
+@Client.on_message(filters.command(['song', f'song@{BOT_USERNAME}']))
+def yts(client, message):
+    try:
+        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
+    except UserNotParticipant:
+        await message.reply_text(
+        text=JOIN_ASAP, disable_web_page_preview=True, reply_markup=FSUBB
+    )
+        return
     user_id = message.from_user.id 
     user_name = message.from_user.first_name 
     rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
@@ -130,7 +143,7 @@ def song(client, message):
     for i in message.command[1:]:
         query += ' ' + str(i)
     print(query)
-    m = message.reply('**Please Wait! Im Searching For Your Song 🔎...**')
+    m = message.reply('<b>Please Wait! Im Searching For Your Song 🔎...</b>')
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
@@ -149,11 +162,11 @@ def song(client, message):
 
     except Exception as e:
         m.edit(
-            "Sorry To Say but I can't find anything ❌!\n\nTry Another Keyword! Btw you spelled it properly 🤔?"
+            "<b> Sorry To Say but I can't find anything ❌!\n\nTry Another Keyword!</b>"
         )
         print(str(e))
         return
-    m.edit("**Downloading Your Song! Please Wait ⏰**")
+    m.edit("<b> Downloading Your Song! Please Wait </b>")
     try:
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
@@ -215,9 +228,9 @@ async def jssong(_, message):
         sname = songs.result[0].song
         slink = songs.result[0].media_url
         ssingers = songs.result[0].singers
-        await m.edit("**Downloading Your Song! Please Wait ⏰**")
+        await m.edit("**Downloading Your Song! Please Wait **")
         song = await download_song(slink)
-        await m.edit("**Uploading Your Song! Please Wait ⏰**")
+        await m.edit("**Uploading Your Song! Please Wait **")
         await message.reply_audio(
             audio=song,
             title=sname,
@@ -296,7 +309,7 @@ async def lyrics_func(_, message):
 
 # Youtube Video Download
 
-@Client.on_message(filters.command(["ytvid", f"ytvid@{BOT_USERNAME}"]))
+@Client.on_message(filters.command(["vid", f"vid@{BOT_USERNAME}"]))
 async def ytmusic(client, message: Message):
     global is_downloading
     if is_downloading:
