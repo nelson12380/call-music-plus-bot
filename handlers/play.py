@@ -61,9 +61,9 @@ FSUBB = InlineKeyboardMarkup(
     )
 
 
-@Client.on_message(command(["play", f"play@{BOT_USERNAME}"]) & other_filters)
+@Client.on_message(command(["nplay", f"nplay@{BOT_USERNAME}"]) & other_filters)
 @errors
-async def play(_, message: Message):
+async def nplay(_, message: Message):
     try:
         await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
     except UserNotParticipant:
@@ -139,8 +139,8 @@ async def play(_, message: Message):
 
 # Pros reading this code be like: Wait wut? wtf? dumb? Me gonna die, lol etc.
 
-@Client.on_message(command("nplay") & other_filters)
-async def nplay(_, message: Message): 
+@Client.on_message(command("play") & other_filters)
+async def play(_, message: Message): 
     try:
         await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
     except UserNotParticipant:
