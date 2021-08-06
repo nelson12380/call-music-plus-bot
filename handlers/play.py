@@ -155,7 +155,7 @@ async def nplay(_, message: Message):
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
           results = YoutubeSearch(query, max_results=5).to_dict()
-        except:
+      except:   
           await lel.edit("Give me something to play")
         # Looks like hell. Aren't it?? FUCK OFF
         try:
