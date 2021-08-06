@@ -26,7 +26,7 @@ from pyrogram.types import Message,InlineKeyboardMarkup, InlineKeyboardButton
 from youtubesearchpython import SearchVideos
 from youtube_search import YoutubeSearch
 from Python_ARQ import ARQ
-from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
+
 from config import ARQ_API_URL, ARQ_API_KEY, BOT_USERNAME, UPDATES_CHANNEL
 from helpers.merrors import capture_err
 from helpers.modhelps import paste
@@ -117,24 +117,9 @@ async def progress(current, total, message, start, type_of_ps, file_name=None):
                 await asyncio.sleep(e.x)
             except MessageNotModified:
                 pass
-            
-JOIN_ASAP = "<b>You Need To Join My updates channel  For Executing This Command 👮‍♀️...</b>"
-
-FSUBB = InlineKeyboardMarkup(
-        [[
-        InlineKeyboardButton(text="🔔 Join My Channel", url=f"https://t.me/sl_bot_zone")
-        ]]
-    )
 
 @Client.on_message(filters.command(['song', f'song@{BOT_USERNAME}']))
 def yts(client, message):
-    try:
-        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id,message.from_user.first_name )
-    except UserNotParticipant:
-        await message.reply_text(
-        text=JOIN_ASAP, disable_web_page_preview=True, reply_markup=FSUBB
-    )
-        return
     user_id = message.from_user.id 
     user_name = message.from_user.first_name 
     rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
