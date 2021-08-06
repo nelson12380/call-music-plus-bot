@@ -129,7 +129,7 @@ FSUBB = InlineKeyboardMarkup(
 @Client.on_message(filters.command(['song', f'song@{BOT_USERNAME}']))
 def yts(client, message):
     try:
-        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
+        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id,message.from_user.first_name )
     except UserNotParticipant:
         await message.reply_text(
         text=JOIN_ASAP, disable_web_page_preview=True, reply_markup=FSUBB
