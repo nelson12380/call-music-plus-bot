@@ -142,8 +142,8 @@ async def cbhowtouse(_, query: CallbackQuery):
 **Setting up:**
     1️⃣ Add **{BOT_USERNAME}** Bot and @{(await USER.get_me()).username} To Your Group! (Send /joingrp  to your group! Streamer Will Automatically join)
     2️⃣ Give Admin To **{BOT_USERNAME}** and **@{(await USER.get_me()).username}** !
-    3️⃣ Start a voice chat.
- 
+    3️⃣ Start a voice chat.[read this](https://telegra.ph/HOW-TO-USE-YAKARI-VC-PLAY-BOT-08-08) 
+  
 **Using Player Commands:**
     1️⃣ **📛 Group Admin Commands 🔰 ,**
      🏷  /play - Reply to supported url, Reply to Audio File or Send /play  with [⭕️ Supported Url List ⭕️](https://ytdl-org.github.io/youtube-dl/supportedsites.html)
