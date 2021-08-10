@@ -1,11 +1,11 @@
-
+# Copyright (c) 2021 Itz-fork <https://github.com/Itz-fork> and Callsmusic
 
 from os import path
 
-from pyrogram import Client, filters 
+from pyrogram import Client, filters # Ik this is weird as this shit is already imported in line 16! anyway ... 
 from pyrogram.types import Message, Voice, InlineKeyboardMarkup, InlineKeyboardButton, Chat, CallbackQuery
 from youtube_search import YoutubeSearch
-from pyrogram.errors import UserNotParticipant, ChatAdminRequired, UsernameNotOccupied
+
 from callsmusic import callsmusic, queues
 
 import converter
@@ -16,7 +16,7 @@ import wget
 
 from helpers.database import db, Database
 from helpers.dbthings import handle_user_status
-from config import DURATION_LIMIT, LOG_CHANNEL, BOT_USERNAME, THUMB_URL
+from config import DURATION_LIMIT, LOG_CHANNEL, BOT_USERNAME, THUMB_URL, CHANNEL_USERNAME, CHANNEL_ID
 from helpers.errors import DurationLimitError
 from helpers.filters import command, other_filters
 from helpers.decorators import errors
@@ -29,37 +29,39 @@ async def _(bot: Client, cmd: command):
     await handle_user_status(bot, cmd)
 
 
-
+# Some Secret Buttons
 PLAYMSG_BUTTONS = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("⏸ Pause ⏸",callback_data="cbpause"),
-                    InlineKeyboardButton("⏩ Next song⏩", callback_data="cbskip"),
-                ],
-                [
-                    InlineKeyboardButton(text="Watch On YouTube 🎬",url="https://www.youtube.com/watch?v=G58pr-Ro5aY&t=22s"),
-                    InlineKeyboardButton(text="🔔Bot Updates", url="https://t.me/SL_bot_zone"),
-                ],
-                [
-                    InlineKeyboardButton(text="❌ Close",callback_data="close")],
-            ]
-        )
+    [
+        [
+            InlineKeyboardButton(
+                "⏸ Pause ⏸", callback_data="cbpause"
+            ),
+            InlineKeyboardButton(
+                "⏩ Skip ⏩", callback_data="cbskip"
+            ),
+        ],
+        [
+            InlineKeyboardButton(
+                "❌ Close ❌", callback_data="close"
+            )
+        ]
+    ]
+)
 
 
-JOIN_ASAP = "<b>You Need To Join My updates channel  For Executing This Command 👮‍♀️...</b>"
+JOIN_ASAP = "<b>You Need To Join My Updates  channel For Executing This Command ⛔️...</b>"
 
 FSUBB = InlineKeyboardMarkup(
         [[
-        InlineKeyboardButton(text="🔔 Join My Channel", url=f"https://t.me/sl_bot_zone")
+        InlineKeyboardButton(text="Join Our Updates Channel 🔔", url=f"https://{CHANNEL_USERNAME}")
         ]]
     )
 
-
-@Client.on_message(command(["nplay", f"nplay@{BOT_USERNAME}"]) & other_filters)
+@Client.on_message(command(["play", f"play@{BOT_USERNAME}"]) & other_filters)
 @errors
-async def play(_, message: Message):
+async def nplay(_, message: Message):
     try:
-        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
+        await message._client.get_chat_member(int("{CHANNEL_ID}"), message.from_user.id)
     except UserNotParticipant:
         await message.reply_text(
         text=JOIN_ASAP, disable_web_page_preview=True, reply_markup=FSUBB
@@ -67,7 +69,7 @@ async def play(_, message: Message):
         return
     audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
 
-    response = await message.reply_text("<b> Please Wait ⏳ ...🎵 Processing Your Song ... </b>")
+    response = await message.reply_text("**🔄 Processing Your Song ...**")
 
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
@@ -112,7 +114,7 @@ async def play(_, message: Message):
                         break
 
         if offset in (None,):
-            await response.edit_text(f" You did not give me anything to play!")
+            await response.edit_text(f"` You did not give me anything to play!`")
             return
 
         url = text[offset:offset + length]
@@ -123,28 +125,22 @@ async def play(_, message: Message):
         position = await queues.put(message.chat.id, file=file)
         MENTMEH = message.from_user.mention()
         await response.delete()
-        await message.reply_photo(thumb, caption=f"Your Song Queued at position💡** `{position}`! \n**Requested by: {MENTMEH}**", reply_markup=PLAYMSG_BUTTONS)
+        await message.reply_photo(thumb, caption=f"**Your Song Queued at position💡** `{position}`! \n**Requested by: {MENTMEH}**", reply_markup=PLAYMSG_BUTTONS)
     else:
         thumb = THUMB_URL
         await callsmusic.set_stream(message.chat.id, file)
         await response.delete()
-        await message.reply_photo(thumb, caption="<b>Playing Your Song 🎸... </b>\n**Requested by: {}**\nvia @sl_bot_zone 🎙".format(message.from_user.mention()), reply_markup=PLAYMSG_BUTTONS)
+        await message.reply_photo(thumb, caption="**Playing Your Song 🎸...** \n**Requested by: {}**".format(message.from_user.mention()), reply_markup=PLAYMSG_BUTTONS)
 
 
 # Pros reading this code be like: Wait wut? wtf? dumb? Me gonna die, lol etc.
 
-@Client.on_message(command("play") & other_filters)
-async def nplay(_, message: Message): 
-    try:
-        await message._client.get_chat_member(int("-1001325914694"), message.from_user.id)
-    except UserNotParticipant:
-        await message.reply_text(
-        text=JOIN_ASAP, disable_web_page_preview=True, reply_markup=FSUBB
-    )
-        return
+@Client.on_message(command(["play", f"play@{BOT_USERNAME}"]) & other_filters)
+@errors
+async def nplay(_, message: Message):
     global que
     
-    lel = await message.reply_text("<b> Please Wait ⏳ ...🎵 Processing Your Song ... </b>")
+    lel = await message.reply_text("**🔄Processing Your Song ...**")
     user_id = message.from_user.id
     user_name = message.from_user.first_name
 
@@ -154,60 +150,22 @@ async def nplay(_, message: Message):
     print(query)
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
-          results = YoutubeSearch(query, max_results=5).to_dict()
-      except:   
-          await lel.edit("Give me something to play")
-        # Looks like hell. Aren't it?? FUCK OFF
-        try:
-            toxxt = "**Select the song you want to play**\n\n"
-            j = 0
-            useer=user_name
-            emojilist = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣",]
+        results = YoutubeSearch(query, max_results=1).to_dict()
+        url = f"https://youtube.com{results[0]['url_suffix']}"
+        # print(results)
+        title = results[0]["title"][:40]
+        thumbnail = results[0]["thumbnails"][0]
+        thumb_name = f"thumb{title}.jpg"
+        thumb = requests.get(thumbnail, allow_redirects=True)
+        open(thumb_name, "wb").write(thumb.content)
+        duration = results[0]["duration"]
+        results[0]["url_suffix"]
+        views = results[0]["views"]
 
-            while j < 5:
-                toxxt += f"{emojilist[j]} <b>Title - [{results[j]['title']}](https://youtube.com{results[j]['url_suffix']})</b>\n"
-                toxxt += f" ╚ <b>Duration</b> - {results[j]['duration']}\n"
-                toxxt += f" ╚ <b>Views</b> - {results[j]['views']}\n"
-                toxxt += f" ╚ <b>Channel</b> - {results[j]['channel']}\n\n"
-
-                j += 1            
-            koyboard = InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton("1️⃣", callback_data=f'plll 0|{query}|{user_id}'),
-                        InlineKeyboardButton("2️⃣", callback_data=f'plll 1|{query}|{user_id}'),
-                        InlineKeyboardButton("3️⃣", callback_data=f'plll 2|{query}|{user_id}'),
-                    ],
-                    [
-                        InlineKeyboardButton("4️⃣", callback_data=f'plll 3|{query}|{user_id}'),
-                        InlineKeyboardButton("5️⃣", callback_data=f'plll 4|{query}|{user_id}'),
-                    ],
-                    [InlineKeyboardButton(text="Close 🗑", callback_data="cls")],
-                ]
-            )       
-            await lel.edit(toxxt,reply_markup=koyboard,disable_web_page_preview=True)
-            # WHY PEOPLE ALWAYS LOVE PORN ?? (A point to think)
-            return
-            # Returning to pornhub
-        except:
-            await lel.edit("No Enough results to choose.. Starting direct play..")
-                        
-            # print(results)
-            try:
-                url = f"https://youtube.com{results[0]['url_suffix']}"
-                title = results[0]["title"][:40]
-                thumbnail = results[0]["thumbnails"][0]
-                thumb_name = f"thumb{title}.jpg"
-                thumb = requests.get(thumbnail, allow_redirects=True)
-                open(thumb_name, "wb").write(thumb.content)
-                duration = results[0]["duration"]
-                results[0]["url_suffix"]
-                views = results[0]["views"]
-
-            except Exception as e:
-                await lel.edit(
-                    "Song not found.Try another song or maybe spell it properly."
-                )
+    except Exception as e:
+        await lel.edit(
+            f"**Error:** {e}"
+        )
         print(str(e))
         return
     try:    
@@ -216,7 +174,7 @@ async def nplay(_, message: Message):
             dur += (int(dur_arr[i]) * secmul)
             secmul *= 60
         if (dur / 60) > DURATION_LIMIT:
-             await lel.edit(f"No! Videos longer than `{DURATION_LIMIT}` minute(s) aren’t allowed, the provided audio is {round(audio.duration / 60)} minute(s) 😒")
+             await lel.edit(f"Bruh! Videos longer than `{DURATION_LIMIT}` minute(s) aren’t allowed, the provided audio is {round(audio.duration / 60)} minute(s) 😒")
              return
     except:
         pass    
@@ -232,4 +190,4 @@ async def nplay(_, message: Message):
         thumb = THUMB_URL
         await callsmusic.set_stream(message.chat.id, file)
         await lel.delete()
-        await message.reply_photo(thumb, caption="<b>Playing Your Song 🎸... </b>\n**Requested by: {}**\nvia @sl_bot_zone 🎙".format(message.from_user.mention()), reply_markup=PLAYMSG_BUTTONS)
+        await message.reply_photo(thumb, caption="**Playing Your Song 🎸...** \n**Requested by: {}**".format(message.from_user.mention()), reply_markup=PLAYMSG_BUTTONS)
