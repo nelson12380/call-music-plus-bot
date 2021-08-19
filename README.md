@@ -26,3 +26,19 @@
 - **Quote Messages Like Quotely Bot!**
 - **Delete Command Feature**
 - **Update Your Bot Without Leaving Telegram**
+
+- **Credits**
+- [first codes](https://github.com/Itz-fork/Callsmusic-Plus)~This is the base Repo! ❤️
+- [Vivek-tp](https://github.com/vivek-tp)~fsubadded
+
+
+**Other Credits**
+-CallsMusic
+-Roj & Marvin : development
+-Laky & Andrew : PyTgCalls
+-Mr Dark prince
+-TeamDaisyX
+-TheHamkerCat
+-Abirhasan2005
+-DevsExpo
+-N A C CREATIVE: For Voice Chat Link Command!
