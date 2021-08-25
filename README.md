@@ -1,6 +1,28 @@
 <h1> call-music-plus-bot </h1>
 
-### ![Start message ](https://telegra.ph/file/881f252144f5708ace52b.jpg)
+<p align="center">
+  <a href="https://github.com/youtubeslgeekshow/call-music-plus-bot/stargazers">
+    <img src="https://img.shields.io/github/stars/youtubeslgeekshow/call-music-plus-bot?style=social">
+
+  </a>
+  
+  <a href="https://github.com/youtubeslgeekshow/call-music-plus-bot/fork">
+    <img src="https://img.shields.io/github/forks/youtubeslgeekshow/call-music-plus-bot?label=Fork&style=social">
+
+  </a>  
+</p>
+
+<h3><details>
+  <summary><b>Don't Open this path </b></summary>
+  <p><a href="https://www.youtube.com/channel/UCvYfJcTr8RY72dIapzMqFQA" title="How to create Bot useing python ">How to create Bot useing python</a>
+ </details></h3>
+ 
+ <h3><details>
+  <summary><b> Screen shot of this bot📸  </b></summary>
+  <p align="left"><a href="https://t.me/szrosebot"><img src="https://telegra.ph/file/881f252144f5708ace52b.jpg" width="200"></a></p>
+ </details></h3>
+ 
+ 
 
 ### Deploy to Heroku 🔥🕺 
 
