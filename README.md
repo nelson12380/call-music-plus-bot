@@ -1,13 +1,13 @@
 <h1> call-music-plus-bot </h1>
 
 <p align="center">
-  <a href="https://github.com/youtubeslgeekshow/call-music-plus-bot/stargazers">
+  <a href="https://github.com/nelson12380/nelson12380/stargazers">
     <img src="https://img.shields.io/github/stars/youtubeslgeekshow/call-music-plus-bot?style=social">
 
   </a>
   
   <a href="https://github.com/youtubeslgeekshow/call-music-plus-bot/fork">
-    <img src="https://img.shields.io/github/forks/youtubeslgeekshow/call-music-plus-bot?label=Fork&style=social">
+    <img src="https://telegra.ph/file/94b049928e16b3cb4a3a5.jpg">
 
   </a>  
 </p>
